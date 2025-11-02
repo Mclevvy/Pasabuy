@@ -1,0 +1,135 @@
+:root {
+  --navbar-width: 250px;
+  --accent: #f59b0b;
+  --light-bg: #fff8ec;
+}
+
+/* Sidebar */
+.sidebar {
+  width: var(--navbar-width);
+  height: 100vh;
+  background: #fff;
+  box-shadow: 2px 0 8px rgba(0, 0, 0, 0.05);
+  padding: 20px 18px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+}
+
+/* Scrollable area */
+.scrollable {
+  flex-grow: 1;
+  overflow-y: auto;
+}
+.scrollable::-webkit-scrollbar {
+  width: 6px;
+}
+.scrollable::-webkit-scrollbar-thumb {
+  background: #ddd;
+  border-radius: 6px;
+}
+
+/* Logo */
+.logo-section {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border-bottom: 1px solid #f3f3f3;
+  padding-bottom: 12px;
+}
+.logo-img {
+  width: 45px;
+  height: 45px;
+  border-radius: 10px;
+  object-fit: cover;
+}
+.logo-text h2 {
+  margin: 0;
+  font-size: 17px;
+  color: #3b2e1a;
+  font-weight: 700;
+}
+.logo-text p {
+  margin: 0;
+  font-size: 12px;
+  color: #888;
+}
+
+/* User */
+.user-section {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 0;
+  border-bottom: 1px solid #f3f3f3;
+}
+.user-avatar {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+}
+.user-text h4 {
+  margin: 0;
+  font-size: 15px;
+  color: #333;
+}
+.user-text p {
+  margin: 0;
+  font-size: 12px;
+  color: #32a852;
+}
+
+/* Menu */
+.menu-title {
+  font-size: 11px;
+  color: #b77a3d;
+  font-weight: 600;
+  margin-top: 15px;
+  margin-bottom: 8px;
+}
+.menu-section ul {
+  padding: 0;
+  list-style: none;
+}
+.menu-section li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  font-size: 14px;
+  color: #333;
+  cursor: pointer;
+  transition: all 0.25s;
+}
+.menu-section li:hover {
+  background: var(--light-bg);
+  color: var(--accent);
+}
+.menu-section li.active {
+  background: var(--light-bg);
+  color: var(--accent);
+}
+
+/* Logout */
+.logout-section {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #f43f5e;
+  cursor: pointer;
+  padding: 12px;
+  border-top: 1px solid #f3f3f3;
+  font-weight: 500;
+}
+
+/* Hide sidebar on phones */
+@media (max-width: 768px) {
+  .sidebar {
+    display: none;
+  }
+}

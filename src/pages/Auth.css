@@ -1,0 +1,295 @@
+/* ====== Base Layout ====== */
+.auth-page {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #fff7ed, #ffe4c4);
+  font-family: 'Inter', sans-serif;
+  padding: 2rem;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+/* ====== Auth Container ====== */
+.auth-container {
+  background: #fff;
+  width: 100%;
+  max-width: 420px;
+  border-radius: 1.25rem;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  animation: fadeInUp 0.6s ease-out;
+  padding: 2.5rem;
+  margin: 2rem auto;
+  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+/* Hide scrollbars */
+.auth-container::-webkit-scrollbar {
+  display: none;
+}
+.auth-container {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* ====== Header ====== */
+.auth-header {
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+/* ====== Logo ====== */
+.logo-container {
+  width: 80px;
+  height: 80px;
+  margin: 0 auto 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: popIn 0.7s ease-out;
+}
+
+.logo-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 20px;
+  box-shadow: 0 4px 12px rgba(234, 88, 12, 0.35);
+  border: 3px solid #fff4ec;
+}
+
+/* ====== Title ====== */
+.auth-title {
+  font-size: 1.9rem;
+  font-weight: 800;
+  color: #431407;
+  margin-bottom: 0.3rem;
+  animation: fadeSlide 1s ease;
+}
+
+.auth-subtitle {
+  color: #92400e;
+  font-size: 0.95rem;
+  animation: fadeSlide 1.2s ease;
+}
+
+/* ====== Tabs ====== */
+.tab-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 1rem;
+}
+
+.tab {
+  flex: 1;
+  text-align: center;
+  padding: 0.75rem 0;
+  font-weight: 600;
+  color: #78350f;
+  background: #fff7ed;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  text-decoration: none;
+  border-bottom: 2px solid transparent;
+}
+
+.tab:hover {
+  background: #ffedd5;
+}
+
+.tab-active {
+  background: #fdba74;
+  color: #431407;
+  border-bottom: 3px solid #ea580c;
+}
+
+/* ====== Inputs ====== */
+.input-group {
+  margin-bottom: 1.25rem;
+}
+
+.input-label {
+  display: block;
+  font-weight: 600;
+  color: #78350f;
+  margin-bottom: 0.4rem;
+}
+
+.input-field {
+  width: 100%;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 0.75rem 1rem;
+  font-size: 0.95rem;
+  transition: border 0.2s, box-shadow 0.2s;
+}
+
+.input-field:focus {
+  outline: none;
+  border-color: #f97316;
+  box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.2);
+}
+
+/* ====== Buttons ====== */
+.btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.65rem 1rem;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.1s, background 0.2s;
+  border: none;
+  font-size: 0.95rem;
+  width: 100%;
+}
+
+.btn:hover {
+  transform: translateY(-1px);
+}
+
+.btn-primary {
+  background: #ea580c;
+  color: white;
+}
+
+.btn-primary:hover {
+  background: #c2410c;
+}
+
+/* ====== Google Button ====== */
+.btn-google {
+  background: #f9fafb;
+  border: 1px solid #e5e7eb;
+  font-size: 0.9rem;
+  height: 44px;
+}
+
+.btn-google:hover {
+  background: #f3f4f6;
+}
+
+.btn-google svg {
+  width: 18px;
+  height: 18px;
+}
+
+/* ====== Divider ====== */
+.divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #9ca3af;
+  font-size: 0.9rem;
+  margin: 1.8rem 0 1.4rem;
+  position: relative;
+  text-align: center;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.divider span {
+  background: #fff;
+  z-index: 2;
+  padding: 0 0.75rem;
+}
+
+.divider::before,
+.divider::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  width: 42%;
+  height: 1px;
+  background: #e5e7eb;
+  transform: translateY(-50%);
+}
+
+.divider::before {
+  left: 0;
+}
+.divider::after {
+  right: 0;
+}
+
+/* ====== Responsive Adjustments ====== */
+@media (max-width: 600px) {
+  /* White background on mobile */
+  .auth-page {
+    background: #ffffff !important;
+    align-items: flex-start;
+    justify-content: flex-start;
+    padding: 0;
+    min-height: 100vh;
+  }
+
+  .auth-container {
+    background: #ffffff;
+    border-radius: 0;
+    width: 100%;
+    min-height: 100vh;
+    box-shadow: none;
+    margin: 0;
+    padding: 2rem 1.5rem;
+    overflow-y: auto;
+  }
+
+  .auth-container::-webkit-scrollbar {
+    display: none;
+  }
+
+  .divider span {
+    background: #ffffff;
+  }
+
+  /* remove orange tab bg on mobile */
+  .tab {
+    background: #ffffff;
+  }
+
+  .tab-active {
+    background: #fff7ed;
+  }
+}
+
+/* ====== Animations ====== */
+@keyframes fadeInUp {
+  from {
+    transform: translateY(40px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes popIn {
+  0% {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes fadeSlide {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

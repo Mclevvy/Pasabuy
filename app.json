@@ -1,0 +1,24 @@
+{
+  "expo": {
+    "name": "Pasabuy",
+    "slug": "pasabuy",
+    "version": "1.0.0",
+    "sdkVersion": "54.0.0",
+    "orientation": "portrait",
+    "platforms": [
+      "android",
+      "ios"
+    ],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "android": {
+      "package": "com.anonymous.pasabuy"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "28ff9b4f-91bb-4493-a1c0-de4b45b1918c"
+      }
+    }
+  }
+}
