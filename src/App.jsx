@@ -10,10 +10,12 @@ import {
 // ✅ Components
 import Navbar from "./components/Navbar";
 import SplashScreen from "./components/SplashScreen";
+import PasabuyerHistory from "./pages/PasabuyerHistory";
+import MyPasabuyRequests from "./pages/MyPasabuyRequests";
 
 // ✅ Pages
 import Home from "./pages/Home";
-import Map from "./pages/Map";
+import Chatbot from "./pages/Chatbot";
 import Chat from "./pages/Chat";
 import Profile from "./pages/Profile";
 import Login from "./pages/Login";
@@ -22,11 +24,15 @@ import Request from "./pages/Request";
 import PasabuyerMode from "./pages/PasabuyerMode";
 import Notifications from "./pages/Notifications";
 
+// ✅ Context
+import { NotificationProvider, useNotification } from "./components/NotificationContext";
+
 import "./App.css";
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [showSplash, setShowSplash] = useState(true);
+  const [authChecked, setAuthChecked] = useState(false);
 
   // 🕒 Show splash screen for 2 seconds
   useEffect(() => {
@@ -37,7 +43,9 @@ function App() {
   // 🔑 Load auth state from localStorage
   useEffect(() => {
     const token = localStorage.getItem("authToken");
+    console.log("Token found:", token);
     setIsAuthenticated(!!token);
+    setAuthChecked(true);
   }, []);
 
   // ✅ Handle Login
@@ -49,37 +57,86 @@ function App() {
   // ✅ Handle Logout
   const handleLogout = () => {
     localStorage.removeItem("authToken");
+    localStorage.removeItem("pasabuyerOnline");
     setIsAuthenticated(false);
   };
 
   // ✅ Show Splash first
   if (showSplash) return <SplashScreen />;
 
+  // ✅ Wait for auth check to complete before showing routes
+  if (!authChecked) {
+    return (
+      <div className="loading-screen">
+        <p>Loading...</p>
+      </div>
+    );
+  }
+
   return (
-    <Router>
-      <AppRoutes
-        isAuthenticated={isAuthenticated}
-        onLogin={handleLogin}
-        onLogout={handleLogout}
-      />
-    </Router>
+    <NotificationProvider>
+      <Router>
+        <AppRoutes
+          isAuthenticated={isAuthenticated}
+          onLogin={handleLogin}
+          onLogout={handleLogout}
+        />
+      </Router>
+    </NotificationProvider>
   );
 }
 
 // ✅ Routes logic
 function AppRoutes({ isAuthenticated, onLogin, onLogout }) {
   const navigate = useNavigate();
+  const { clearNotifications } = useNotification();
 
   // ✅ Redirect if trying to access /login or /register when already logged in
   useEffect(() => {
     const currentPath = window.location.pathname;
     if (isAuthenticated && (currentPath === "/login" || currentPath === "/register")) {
-      navigate("/", { replace: true });
+      navigate("/home", { replace: true });
     }
   }, [isAuthenticated, navigate]);
 
+  // ✅ Clear notifications when navigating to chat page
+  useEffect(() => {
+    const handleRouteChange = () => {
+      if (window.location.pathname === "/chat") {
+        clearNotifications();
+      }
+    };
+
+    // Listen for route changes
+    const handlePopState = () => {
+      setTimeout(handleRouteChange, 100);
+    };
+
+    // Check current route on mount
+    handleRouteChange();
+
+    // Listen for browser back/forward
+    window.addEventListener('popstate', handlePopState);
+
+    return () => {
+      window.removeEventListener('popstate', handlePopState);
+    };
+  }, [clearNotifications]);
+
   return (
     <Routes>
+      {/* ========= ROOT PATH REDIRECT ========= */}
+      <Route 
+        path="/" 
+        element={
+          isAuthenticated ? (
+            <Navigate to="/home" replace />
+          ) : (
+            <Navigate to="/login" replace />
+          )
+        } 
+      />
+
       {/* ========= PUBLIC ROUTES ========= */}
       {!isAuthenticated && (
         <>
@@ -92,7 +149,7 @@ function AppRoutes({ isAuthenticated, onLogin, onLogout }) {
       {isAuthenticated && (
         <>
           <Route
-            path="/"
+            path="/home"
             element={
               <>
                 <Navbar onLogout={onLogout} />
@@ -101,11 +158,11 @@ function AppRoutes({ isAuthenticated, onLogin, onLogout }) {
             }
           />
           <Route
-            path="/map"
+            path="/chatbot"
             element={
               <>
                 <Navbar onLogout={onLogout} />
-                <Map />
+                <Chatbot />
               </>
             }
           />
@@ -114,7 +171,7 @@ function AppRoutes({ isAuthenticated, onLogin, onLogout }) {
             element={
               <>
                 <Navbar onLogout={onLogout} />
-                <Chat />
+                <ChatWithNotificationClear />
               </>
             }
           />
@@ -154,6 +211,26 @@ function AppRoutes({ isAuthenticated, onLogin, onLogout }) {
               </>
             }
           />
+          
+          {/* ========= NEW ROUTES ========= */}
+          <Route
+            path="/pasabuyer-history"
+            element={
+              <>
+                <Navbar onLogout={onLogout} />
+                <PasabuyerHistory />
+              </>
+            }
+          />
+          <Route
+            path="/my-pasabuy-requests"
+            element={
+              <>
+                <Navbar onLogout={onLogout} />
+                <MyPasabuyRequests />
+              </>
+            }
+          />
         </>
       )}
 
@@ -162,7 +239,7 @@ function AppRoutes({ isAuthenticated, onLogin, onLogout }) {
         path="*"
         element={
           isAuthenticated ? (
-            <Navigate to="/" replace />
+            <Navigate to="/home" replace />
           ) : (
             <Navigate to="/login" replace />
           )
@@ -170,6 +247,18 @@ function AppRoutes({ isAuthenticated, onLogin, onLogout }) {
       />
     </Routes>
   );
+}
+
+// ✅ Wrapper component for Chat that clears notifications
+function ChatWithNotificationClear() {
+  const { clearNotifications } = useNotification();
+
+  useEffect(() => {
+    // Clear notifications when chat component mounts
+    clearNotifications();
+  }, [clearNotifications]);
+
+  return <Chat />;
 }
 
 export default App;

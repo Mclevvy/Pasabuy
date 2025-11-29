@@ -1,0 +1,259 @@
+/* Chatbot.css - Fixed for Sidebar */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+.chatbot-page {
+  width: 100%;
+  min-height: 100vh;
+  background: #f5f5f5;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Desktop Header */
+.desktop-header {
+  background: linear-gradient(135deg, #f59b0b 0%, #ff8a00 100%);
+  color: white;
+  padding: 20px 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.header-content h2 {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.header-content p {
+  margin: 0;
+  opacity: 0.9;
+  font-size: 0.9rem;
+}
+
+.notif-btn {
+  background: rgba(255, 255, 255, 0.2);
+  border: none;
+  color: white;
+  padding: 12px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 1.2rem;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s;
+}
+
+.notif-btn:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+/* Mobile Header */
+.mobile-header {
+  background: white;
+  padding: 15px 20px;
+  display: none;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  width: 100%;
+}
+
+.mobile-logo {
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  object-fit: cover;
+}
+
+.mobile-header h1 {
+  margin: 0;
+  color: #333;
+  font-size: 1.4rem;
+  font-weight: 600;
+  flex: 1;
+  margin-left: 10px;
+}
+
+.mobile-notif {
+  background: #f8f9fa;
+  color: #333;
+}
+
+.mobile-notif:hover {
+  background: #e9ecef;
+}
+
+/* Main Chat Area */
+.chatbot-main {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 20px;
+  overflow: hidden;
+}
+
+.chatbot-container {
+  width: 100%;
+  height: 100%;
+  max-width: 1200px;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+#bp-embedded-webchat {
+  width: 100% !important;
+  height: 100% !important;
+  min-height: 500px;
+  border: none !important;
+  background: white !important;
+}
+
+/* Ensure Botpress iframe takes full container */
+#bp-embedded-webchat iframe {
+  width: 100% !important;
+  height: 100% !important;
+  border: none !important;
+  border-radius: 12px !important;
+}
+
+/* ===== RESPONSIVE DESIGN ===== */
+
+/* Mobile Styles */
+@media (max-width: 768px) {
+  .desktop-header {
+    display: none;
+  }
+  
+  .mobile-header {
+    display: flex;
+  }
+  
+  .chatbot-page {
+    padding-bottom: 80px;
+    height: 100vh;
+    overflow: hidden;
+  }
+  
+  .chatbot-main {
+    padding: 10px;
+    height: calc(100vh - 140px);
+  }
+  
+  .chatbot-container {
+    height: 100%;
+    border-radius: 8px;
+  }
+  
+  #bp-embedded-webchat iframe {
+    border-radius: 8px !important;
+  }
+}
+
+/* Desktop Styles - Account for sidebar */
+@media (min-width: 769px) {
+  .desktop-header {
+    display: flex;
+  }
+  
+  .mobile-header {
+    display: none;
+  }
+  
+  .chatbot-main {
+    height: calc(100vh - 80px);
+    padding: 20px;
+  }
+  
+  .chatbot-container {
+    height: 100%;
+  }
+  
+  /* Remove bottom nav on desktop */
+  .chatbot-page {
+    padding-bottom: 0;
+  }
+}
+
+/* Large Desktop */
+@media (min-width: 1200px) {
+  .chatbot-main {
+    padding: 30px;
+  }
+  
+  .chatbot-container {
+    max-width: 1400px;
+  }
+}
+
+/* ===== SIDEBAR COMPATIBILITY ===== */
+
+/* If sidebar is 250px wide */
+.sidebar-250 ~ .chatbot-page,
+.layout-with-sidebar .chatbot-page {
+  margin-left: 250px;
+  width: calc(100% - 250px);
+}
+
+/* If sidebar is 300px wide */
+.sidebar-300 ~ .chatbot-page {
+  margin-left: 300px;
+  width: calc(100% - 300px);
+}
+
+/* If sidebar is 280px wide */
+.sidebar-280 ~ .chatbot-page {
+  margin-left: 280px;
+  width: calc(100% - 280px);
+}
+
+/* Default sidebar width adjustment */
+@media (min-width: 769px) {
+  .chatbot-page {
+    margin-left: 250px; /* Adjust this based on your actual sidebar width */
+    width: calc(100% - 250px);
+  }
+}
+
+/* Emergency sidebar fix */
+.main-content .chatbot-page {
+  margin-left: 0 !important;
+  width: 100% !important;
+}
+
+.app-layout .chatbot-page {
+  margin-left: 0 !important;
+  width: 100% !important;
+}
+
+/* Force proper layout in common layout patterns */
+[class*="layout"] .chatbot-page,
+[class*="container"] .chatbot-page,
+[class*="main"] .chatbot-page {
+  margin-left: 0 !important;
+  width: 100% !important;
+}
+
+/* Ensure no horizontal scroll */
+.chatbot-page {
+  overflow-x: hidden;
+}
+
+/* Bottom nav spacing for mobile only */
+@media (max-width: 768px) {
+  .chatbot-page {
+    padding-bottom: 80px;
+  }
+}
